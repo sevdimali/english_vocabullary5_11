@@ -30,11 +30,10 @@ def translate(word):
 
 def extract_word(word):
 
-    parts = word.partition('/')
-    ac_word = parts[0].strip()
-    spelling_tup = word[word.find('/'):word.rfind('/')+1]
-    spelling = ''.join(spelling_tup)
-    spelling = spelling.replace('\r\n', '')
+    parts = word.partition('[')
+    ac_word = word[0:word.find('[')]
+    spelling_tup = word[word.find('['):word.rfind(']')+1]
+    spelling = spelling_tup.replace('\r\n', '')
     word_az = translate(ac_word)
     dict_word = {'word': ac_word, 'spelling': spelling, 'word_az': word_az}
     print(dict_word)
@@ -44,11 +43,11 @@ def extract_word(word):
 lines = codecs.open('words.txt', encoding='utf-8')
 all_words = []
 for line in lines:
-    if '/' in line:
-        dudu = extract_word(line)
-        all_words.append(dudu)
+    dudu = extract_word(line)
+    all_words.append(dudu)
 
-workbook = xlsxwriter.Workbook('9.xlsx')
+
+workbook = xlsxwriter.Workbook('10.xlsx')
 worksheet = workbook.add_worksheet()
 row = 0
 col = 0
