@@ -11,16 +11,21 @@ def translate(word):
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(executable_path='D:/chromedriver.exe', options=chrome_options)
     # driver = webdriver.Chrome(executable_path='D:/chromedriver.exe')
-    driver.get("http://dilmanc.az/")
-    driver.find_element_by_id('id_from').send_keys(word)
-    driver.find_element_by_id('id_translate_submit').click()
-    time.sleep(20)
-    tr_word = driver.find_element_by_id('id_to').text
-    if tr_word == '':
-        extra_txt = driver.find_element_by_id('divResults')
-        extra_txt = extra_txt.find_element_by_tag_name('span').text
-        tr_word = extra_txt
-    driver.quit()
+    try:
+        driver.get("http://dilmanc.az/")
+        driver.find_element_by_id('id_from').send_keys(word)
+        driver.find_element_by_id('id_translate_submit').click()
+        # time.sleep(20)
+        tr_word = driver.find_element_by_id('id_to').text
+        if tr_word == '':
+            extra_txt = driver.find_element_by_id('divResults')
+            extra_txt = extra_txt.find_element_by_tag_name('span').text
+            tr_word = extra_txt
+        driver.quit()
+    except:
+        driver.quit()
+        tr_word =''
+
     return tr_word
 
 
